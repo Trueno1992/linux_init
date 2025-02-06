@@ -1,6 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/home/admin/project/merge_rec_wlz2/repo/biz'
-let g:netrw_dirhist_2='/usr/lib/scons/SCons/Tool/ascons'
-let g:netrw_dirhist_3='/home/admin/rec_data_wlz/qsug_data'
-let g:netrw_dirhist_4='/home/admin/project/query_sug_hxl/handle/HintText/processor/recaller'
