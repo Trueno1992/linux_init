@@ -22,15 +22,15 @@
 5: 配置sshkey
     https://cloud.tencent.com/developer/article/1861466
 
-6:  生成ssh key
-    if:   ssh-keygen -t ed25519 -C "your_email@example.com"
-    else: ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+6:  生成ssh key 
+    if:   ssh-keygen -t ed25519 -C "your_email@example.com" 
+    else: ssh-keygen -t rsa -b 4096 -C "your_email@example.com" 
     else: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
 
-7: sudo yum update
-   sudo yum groupinstall "Development Tools"
-   sudo yum install openssl-devel
-   sudo yum update openssl
+7: sudo yum update  
+    sudo yum groupinstall "Development Tools"   
+    sudo yum install openssl-devel  
+    sudo yum update openssl
 
 8: 无法访问github.com
    在该网址上找到搜www.github.com 找到所有可以访问的ip (https://www.whatsmydns.net/#A/www.github.com)
