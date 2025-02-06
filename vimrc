@@ -17,11 +17,12 @@ let Tlist_File_Fold_Auto_Close = 0     " 不要关闭其他文件的tags
 let Tlist_Enable_Fold_Column = 0       " 不要显示折叠树  
 let Tlist_Show_One_File=1              " 不同时显示多个文件的tag，只显示当前文件的
 autocmd FileType h,cpp,cc,c set tags+=/usr/include/tags
-map  <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q . <CR><CR> :TlistUpdate<CR>        "按下F5重新生成tag文件，并更新taglist
-imap <F5> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q . <CR><CR> :TlistUpdate<CR>   "按下F5重新生成tag文件，并更新taglist
+autocmd FileType h,cpp,cc,c set tags+=/home/admin/.vim/cpp_tags
+map  <F5> :!ctags -R --c++-kinds=+px --fields=+iaS --exclude=data/* --exclude=_external/* --exclude=build/* --exclude=logs/* --extra=+q . <CR><CR> :TlistUpdate<CR>        "按下F5重新生成tag文件，并更新taglist
+imap <F5> <ESC>:!ctags -R --c++-kinds=+px --fields=+iaS --exclude=data/* --exclude=_external/* --exclude=build/* --exclude=logs/* --extra=+q . <CR><CR> :TlistUpdate<CR>   "按下F5重新生成tag文件，并更新taglist
 
 "以下是taglist的设置
-nmap tt :Tlist<CR><CR> 00<CR>
+nmap <F12> :Tlist<CR><CR> 00<CR>
 let Tlist_Auto_Open=0                  "默认打开Taglist
 let Tlist_Ctags_Cmd = '/usr/bin/ctags' "ctag的安装路径
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
@@ -30,7 +31,7 @@ let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
 
 " mru 的配置
 nmap ff :MRU<CR>
-let MRU_Include_Files = '\.c$\|\.h$\|\.cpp$\|\.hpp$\|.jce$\|.py$\|.log$\|.txt$'
+let MRU_Include_Files = '\.c$\|\.h$\|\.cpp$\|\.hpp$\|.jce$\|.py$\|.log$\|.txt$|.json$'
 let MRU_Window_Height = 35     "窗口高度
 let MRU_Max_Menu_Entries = 35  "窗口中展示条数
 let MRU_Max_Entries = 100
@@ -39,7 +40,7 @@ let MRU_Auto_Close = 1
 " tabedit 配置
 nmap <C-h> <ESC>:tabp<CR>
 nmap <C-l> <ESC>:tabn<CR>
-nmap <C-t> <ESC>:tabedit
+nmap <C-n> <ESC>:tabedit 
 nmap g0 <ESC>:tabn 0<CR>
 nmap g1 <ESC>:tabn 1<CR>
 nmap g2 <ESC>:tabn 2<CR>
@@ -115,6 +116,19 @@ if filereadable("./filenametags")                "设置tag文件的名字
 endif
 map  <F6> :!sh ~/.vim/sh/genfiletags.sh<CR><CR>
 
+" a.vim
+" :A 头文件／源文件切换
+" :AS 分割窗后并切换头/源文件(切割为上下两个窗口)
+" :AV 垂直切割窗口后切换头/源文件(切割为左右两个窗口)
+" :AT 新建Vim标签式窗口后切换
+" :AN 在多个匹配文件间循环切换
+" 将光标所在处单词作为文件名打开
+" :IH 切换至光标所在文件
+" :IHS 分割窗口后切换至光标所在文件(指将光标所在处单词作为文件名打开)
+" :IHV 垂直分割窗口后切换
+" :IHT 新建标签式窗口后切换
+" :IHN 在多个匹配文件间循环切换
+
 " 以下是cscope 的配置
 if has("cscope")
     set csprg=/usr/bin/cscope
@@ -147,13 +161,25 @@ set smarttab
 set autoindent
 set backspace=indent,eol,start
 set numberwidth=1   " 去掉行号前的空格
-
-set history=200     " keep 50 lines of command line history
+set history=500     " keep 50 lines of command line history
 set ruler           " show the cursor position all the time
 set showcmd         " display incomplete commands
 set incsearch       " do incremental searching
 set number
-set cindent
+au FileType cpp,cc,c,h set cindent
+au FileType python :set number
+au FileType python :set foldmethod=syntax
+au FileType python :set smartindent
+
+"set ignorecase
+
+
+"注释插件nerdcommenter
+"\ca 转换注释的方式，比如： /**/和//
+"\cm 对被选区域用一对注释符进行注释，前面的注释对每一行都会添加注释
+"\cc 注释当前行和选中行
+"\cu 取消注释
+"\cs "添加性感的注释，代码开头介绍部分通常使用该注释
 
 syntax on
 set hlsearch
@@ -163,8 +189,9 @@ set termencoding=utf-8
 set encoding=utf-8
 
 :set viminfo='1000,<500
-:colorscheme delek
-hi Type ctermfg =yellow
+"colorscheme darkblue
+hi Type ctermfg =Blue
+hi MatchParen ctermbg=Blue guibg=lightblue
 hi Comment ctermfg =gray
 highlight Pmenu ctermbg=darkred
 highlight PmenuSel ctermbg=red ctermfg=yellow
@@ -177,6 +204,13 @@ nmap ~ :nohlsearch<CR>
 "nmap 22  <C-w>j
 nmap 00 <C-w><C-w>
 
+"autocmd VimEnter *, exec Init()
+"func Init()
+"    if &filetype == ''
+"        :MRU
+"    endif
+"endfunc
+
 nmap ge $
 nmap ga _
 nnoremap -dd "_dd
@@ -186,8 +220,8 @@ nnoremap -d$ "_d$
 set wildmenu
 set wildmode=longest:full,full
 
-set t_ti=
-set t_te=
+"set t_ti=
+"set t_te=
 
 "nmap <left>  25h
 "nmap <right> 25l
@@ -197,3 +231,13 @@ set t_te=
 highlight ExtraWhitespace ctermbg=red guibg=darkgreen
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$\| \+\ze\t/
+
+au FileType c,cc,cpp,h setlocal dict+=~/.vim/dict/cpp.dict
+au FileType c,cc,cpp,h setlocal dict+=~/.vim/dict/cpp2.dict
+au FileType cpp,cc,c,h setlocal dict+=~/.vim/dict/cpp_tags.dict
+"au FileType cpp,cc,c,h setlocal dict+=./tags
+"au FileType cpp,cc,c,h setlocal dict+=../tags
+"au FileType cpp,cc,c,h setlocal dict+=../../tags
+let now_file  = expand('%:p')
+if filereadable(now_file)
+endif
