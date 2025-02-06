@@ -22,3 +22,7 @@
 5: 配置sshkey
     https://cloud.tencent.com/developer/article/1861466
 
+6:  生成ssh key
+    if:   ssh-keygen -t ed25519 -C "your_email@example.com"
+    else: ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+    else: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
