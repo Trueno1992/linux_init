@@ -1,0 +1,47 @@
+# sudoers file.
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# See the man page for the details on how to write a sudoers file.
+#
+
+# Override builtin defaults
+Defaults    syslog=auth,timestamp_timeout=300,!set_logname
+
+# User alias specification
+User_Alias      DEVEL=admin
+
+# User alias specification (b2b)
+User_Alias MYSQL_ADMIN = mysql
+User_Alias GUEST_ADMIN = guest
+
+# Cmnd alias specification
+Cmnd_Alias  SHELLS = /bin/sh,/bin/ash,/bin/bsh,/bin/bash,/bin/csh,/bin/ksh,/bin/rsh,/bin/tcsh,/bin/zsh
+Cmnd_Alias  VIETC = /usr/sbin/visudo,/usr/sbin/vipw,/usr/sbin/vigr
+Cmnd_Alias  USERADD = /usr/sbin/useradd,/usr/sbin/adduser
+Cmnd_Alias SUPERMIT = !/usr/bin/sudo*,!/bin/su*,/bin/su -c*,/bin/su [a-zA-Z0-9]*,!/bin/su *root*
+Cmnd_Alias SUDOEXEC = /bin/sh [/~.a-zA-z0-9]*, /bin/sh -c*, \
+                        /bin/ash [/~.a-zA-z0-9]*, /bin/ash -c*, \
+                        /bin/bsh [/~.a-zA-z0-9]*, /bin/bsh -c*, \
+                        /bin/bash [/~.a-zA-z0-9]*, /bin/bash -c*, \
+                        /bin/csh [/~.a-zA-z0-9]*, /bin/csh -c*, \
+                        /bin/ksh [/~.a-zA-z0-9]*, /bin/ksh -c*, \
+                        /bin/rsh [/~.a-zA-z0-9]*, /bin/rsh -c*, \
+                        /bin/tcsh [/~.a-zA-z0-9]*, /bin/tcsh -c*, \
+                        /bin/zsh [/~.a-zA-z0-9]*, /bin/zsh -c*
+
+# User privilege specification
+root    ALL=(ALL) ALL
+
+## settings from ali local
+%users  ALL=(users) ALL
+%tbops  ALL=(ALL) ALL,SUPERMIT,!SHELLS,SUDOEXEC
+%tbpe   ALL=(ALL) ALL,SUPERMIT,!SHELLS,SUDOEXEC,!VIETC
+%tbdba  ALL=(ALL) ALL,SUPERMIT,!SHELLS,SUDOEXEC,!VIETC
+%tbnoc  ALL=(ALL) ALL,SUPERMIT,!SHELLS,SUDOEXEC,!VIETC,!USERADD
+%tbscm  ALL=(ALL) ALL,SUPERMIT,!SHELLS,SUDOEXEC,!VIETC,!USERADD
+%tbdev  ALL=(ALL) ALL,SUPERMIT,!SHELLS,SUDOEXEC,!VIETC,!USERADD
+%tbtest ALL=(ALL) ALL,SUPERMIT,!SHELLS,SUDOEXEC,!VIETC,!USERADD
+
+admin  ALL = (ALL) NOPASSWD:ALL,SUPERMIT,!SHELLS,SUDOEXEC,!VIETC,!USERADD
+lighthouse ALL = (ALL) NOPASSWD:ALL,SUPERMIT,!SHELLS,SUDOEXEC,!VIETC,!USERADD
