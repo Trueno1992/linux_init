@@ -220,8 +220,9 @@ nnoremap -d$ "_d$
 set wildmenu
 set wildmode=longest:full,full
 
-"set t_ti=
-"set t_te=
+set t_ti=
+set t_te=
+set mouse=a
 
 "nmap <left>  25h
 "nmap <right> 25l
